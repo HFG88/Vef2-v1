@@ -40,7 +40,7 @@ async function main() {
   // TODO búa til index
   const indexHtml = generateIndexHtml();
 
-  await fs.writeFile('./dist/index.html', indexHtml, "utf-8");
+  await fs.writeFile("./dist/index.html", indexHtml, "utf-8");
 }
 
 main().catch((error) => {

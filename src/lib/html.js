@@ -1,20 +1,18 @@
 export function generateIndexHtml() {
+  const html = /* HTML */ ` <html>
+    <head>
+      <script src="scripts.js" type="module"></script>
+    </head>
+    <body>
+      <h1>Spurningaleikur!</h1>
+      <p>Velkomin velkomin! Veldu flokk til að svara spurningum í:</p>
+      <ul>
+        <li><a href="saga.html">Saga</a></li>
+      </ul>
+    </body>
+  </html>`;
 
-  const html = /* HTML */ `
-      <html>
-      <head>
-        <script src="scripts.js" type="module"></script>
-      </head>
-      <body>
-        <h1>Spurningaleikur!</h1>
-        <p>Velkomin velkomin! Veldu flokk til að svara spurningum í:</p>
-        <ul>
-  <li><a href="saga.html">Saga</a></li>
-</ul>
-      </body>
-    </html>`;
-
-  return html
+  return html;
 }
 
 export function generateQuestionHtml(q) {
@@ -42,7 +40,9 @@ export function generateQuestionCategoryHtml(title, questionsHtml) {
           <div class="incorrect">0</div>
         </div>
         <div class="questions">
-        <h2>${title}</h2>${questionsHtml}</div>
+          <h2>${title}</h2>
+          ${questionsHtml}
+        </div>
       </body>
     </html>
   `;
