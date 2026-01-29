@@ -13,7 +13,7 @@
     4 	Saga
     5 	Landafræði
     6 	Skemmtun og afþreying
-    7 	Íþróttir og tómstundir
+    7 	
 */
 export const CATEGORIES = {
   1: "Almenn kunnátta",

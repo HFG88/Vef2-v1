@@ -6,40 +6,55 @@ if (!correctElement || !incorrectElement) {
 }
 
 function questionAnswerHandler(e) {
-  const button = e.target;
+  const button = e.target.closest(".button-correct, .button-incorrect");
+  if (!button) return;
+
+  const parentQuestion = button.closest(".question");
+  if (!parentQuestion) return;
+
+  // 🚫 Prevent double answering
+  if (parentQuestion.dataset.answered === "true") return;
+
+  parentQuestion.dataset.answered = "true";
 
   const isCorrect = button.classList.contains("button-correct");
-  const parentQuestion = button.closest(".question");
 
-  console.log(button, parentQuestion);
+  const counterEl = isCorrect ? correctElement : incorrectElement;
+  const current = Number.parseInt(counterEl.textContent ?? "0", 10) || 0;
+  counterEl.textContent = String(current + 1);
+  
+  button.classList.add(isCorrect ? "correct-color" : "wrong-color");
 
-  if (!correctElement) {
-    throw new Error("missing correct element");
-  }
-  if (!incorrectElement) {
-    throw new Error("missing incorrect element");
-  }
+  // ⭐ Disable BOTH buttons in THIS question
+  const questionButtons = parentQuestion.querySelectorAll(
+    ".button-correct, .button-incorrect"
+  );
 
-  if (isCorrect) {
-    const currentCorrectText = correctElement.textContent;
-    const currentCorrect = Number.parseInt(currentCorrectText ?? "0");
-
-    const updatedCorrect = currentCorrect + 1;
-
-    correctElement.textContent = updatedCorrect.toString();
-  }
-  else{
-    const currentIncorrectText = incorrectElement.textContent;
-    const currentIncorrect = Number.parseInt(currentIncorrectText ?? "0");
-
-    const updatedIncorrect = currentIncorrect + 1;
-
-    incorrectElement.textContent = updatedIncorrect.toString();
-  }
+  questionButtons.forEach((btn) => {
+    btn.disabled = true;
+  });
 }
 
-const buttons = document.querySelectorAll("button");
+
+const buttons = document.querySelectorAll(".button-correct, .button-incorrect");
 
 for (const button of buttons) {
   button.addEventListener("click", questionAnswerHandler);
 }
+
+export function setupArrowToggleAll() {
+  document.querySelectorAll(".question").forEach((question) => {
+    const arrow = question.querySelector(".arrow-buttons");
+    const answer = question.querySelector(".answer");
+    const up = question.querySelector(".up-arrow");
+    const down = question.querySelector(".down-arrow");
+
+    arrow.addEventListener("click", () => {
+      answer.classList.toggle("hidden");
+      up.classList.toggle("hidden");
+      down.classList.toggle("hidden");
+    });
+  });
+}
+
+setupArrowToggleAll();

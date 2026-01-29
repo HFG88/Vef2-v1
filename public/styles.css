@@ -1,1 +1,225 @@
-/* útfæra */
+/* Config */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  color: rgb(255 255 255 / 87%);
+  background-color: #242424;
+  font-synthesis: none;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+
+  /* Mín */
+  --font-size: 16px;
+  --small: 0.5rem;
+  --medium: 1rem;
+  --big: 2rem;
+  --offset: 20px;
+  --width-offset: calc(100% - calc(2 * var(--offset)));
+  --ui-background-color: #2e2e2e;
+  --question-background-color: #3a3939;
+}
+
+/* General */
+html {
+  box-sizing: border-box;
+  font-size: var(--font-size);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.5rem 3rem;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  will-change: filter;
+  transition: filter 300ms;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+  color: #646cff;
+}
+
+img {
+  max-width: 100%;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Media */
+
+@media (width >= 420px) and (width <= 550px) {
+  .question .buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+  }
+
+  .buttons .answer-button {
+    grid-column: span 1; 
+    
+  }
+}
+
+
+@media (width >= 550px) {
+  body .questions {
+    grid-template-columns: 1fr 1fr;
+    
+  }
+}
+
+/* Layout */
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 100%;
+
+  /* grid items eru miðjuð */
+  justify-items: center;
+  gap: var(--offset);
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+header {
+  max-width: 100%;
+  display: grid;
+  gap: var(--small);
+  padding: var(--medium);
+  border-radius: var(--big);
+  background-color: var(--ui-background-color);
+  position: sticky;
+  top: var(--small);
+  z-index: 1;
+  justify-items: center;  
+}
+
+main {
+  max-width: var(--width-offset);
+}
+
+
+/* UI */
+.header-title {
+  font-size: clamp(1.5rem, 5vw, 1.8rem);
+}
+
+.score-counter {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: var(--medium);
+  margin-left: 0;
+  flex-wrap: wrap;
+}
+
+.score-counter .score {
+  display: flex;
+  align-items: center;
+  gap: var(--small);
+  padding: var(--small) var(--medium);
+  border-radius: var(--small);
+  background-color: #1a1a1a;
+}
+
+header > .ui > *:not(:last-child) {
+  margin-bottom: var(--small);
+}
+
+header > .ui > :last-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.arrow-buttons {
+  width: 100%;
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: #4a4a4a;
+}
+
+.arrow-buttons > img {
+  max-width: 5%;
+  margin: 1px;
+}
+
+/* Questions */
+.questions {
+  display: grid;
+  grid-template-columns: 100%;
+  gap: var(--medium);
+}
+
+.question {
+  background-color: var(--question-background-color);
+  border-radius: var(--small);
+  padding: var(--small);
+}
+
+.question-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--small);
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.category {
+  white-space: normal;         /* Allows text wrapping */
+  word-break: break-word;      /* Ensures the text can break at breakable points */
+}
+
+.category::after {
+  content: '\200B';            /* Adds a zero-width space after the element */
+}
+
+
+
+
+.buttons {
+  display: flex;
+  flex-direction: column; /* Stack buttons in a column */
+  width: 100%; /* Ensures .buttons takes up the full width */
+  gap: var(--spacing, 0.5rem); /* Space between buttons */
+}
+
+.buttons button {
+  flex: 1; /* Makes each button the same height */
+  width: 100%; /* Makes each button take up the full width of .buttons */
+}
+
+.correct-color {
+  background-color: #36d5366f;
+}
+
+.wrong-color {
+  background-color: rgb(198 34 34 / 48.9%);
+
+}
