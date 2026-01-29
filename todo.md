@@ -9,6 +9,11 @@
 - [x] JS á client
 - [x] búa til basic index.html
 
-- [ ] CSS virkni
-- [ ] HTML virkni
+
+- [] HTML virkni
+- [x] Category listi
+- [] Fela/Sýna svör (Falin by default)
+- [] Bæta við upplýsingum í html (erfiðleiki, etc?)
+
+- [] CSS virkni
 

@@ -1,9 +1,10 @@
 import fs from "node:fs/promises";
-import { parseLine } from "./lib/parse.js";
+import { CATEGORIES, parseLine } from "./lib/parse.js";
 import {
   generateIndexHtml,
   generateQuestionCategoryHtml,
   generateQuestionHtml,
+  generateListHtml,
 } from "./lib/html.js";
 
 const MAX_QUESTIONS_PER_CATEGORY = 100;
@@ -13,32 +14,35 @@ async function main() {
   const distPath = "./dist";
   await fs.mkdir(distPath);
 
+  // Sækja spurningarnar
   const content = await fs.readFile("./questions.csv", "utf-8");
 
+  // Brjóta þær niður í línur
   const lines = content.split("\n");
 
+  // Parsa hverja línu fyrir sig í spurningar object
   const questions = lines.map(parseLine);
 
-  const qualityHistoryQuestions = questions
-    .filter((q) => q && q.categoryNumber === "4" && q.quality === "3")
-    .slice(0, MAX_QUESTIONS_PER_CATEGORY);
+  // Ítra í gegnum öll category og búa til HTML síðu fyrir þær
+  for (const [categoryNumber, categoryName] of Object.entries(CATEGORIES)) {
+    const filtered = questions
+      .filter(
+        (q) => q && q.category?.number === categoryNumber && q.quality === "3",
+      )
+      .slice(0, MAX_QUESTIONS_PER_CATEGORY);
 
-  // TODO ítra gegnum alla flokka og búa til
+    if (filtered.length === 0) continue;
 
-  const questionsHtml = qualityHistoryQuestions
-    .map(generateQuestionHtml)
-    .join("\n");
+    const questionsHtml = filtered.map(generateQuestionHtml).join("\n");
 
-  const output = generateQuestionCategoryHtml("Saga", questionsHtml);
+    const output = generateQuestionCategoryHtml(categoryName, questionsHtml);
 
-  const path = "./dist/saga.html";
+    const path = `./dist/${categoryName.toLowerCase()}.html`;
 
-  await fs.writeFile(path, output, "utf-8");
-
-  // TODO búa til alla hina flokkana
-
-  // TODO búa til index
-  const indexHtml = generateIndexHtml();
+    await fs.writeFile(path, output, "utf-8");
+  }
+  const listHtml = generateListHtml(CATEGORIES);
+  const indexHtml = generateIndexHtml(listHtml);
 
   await fs.writeFile("./dist/index.html", indexHtml, "utf-8");
 }

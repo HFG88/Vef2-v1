@@ -1,4 +1,4 @@
-export function generateIndexHtml() {
+export function generateIndexHtml(categoryList) {
   const html = /* HTML */ ` <html>
     <head>
       <script src="scripts.js" type="module"></script>
@@ -6,8 +6,8 @@ export function generateIndexHtml() {
     <body>
       <h1>Spurningaleikur!</h1>
       <p>Velkomin velkomin! Veldu flokk til að svara spurningum í:</p>
-      <ul>
-        <li><a href="saga.html">Saga</a></li>
+      <ul class="category-list">
+        ${categoryList}
       </ul>
     </body>
   </html>`;
@@ -49,3 +49,19 @@ export function generateQuestionCategoryHtml(title, questionsHtml) {
 
   return html;
 }
+
+function generateListItemHtml(categoryName) {
+  return /* HTML */ `
+    <li>
+      <a href="${categoryName}.html">${categoryName}</a>
+    </li>
+  `;
+}
+
+export function generateListHtml(categories) {
+  return Object.values(categories)
+    .map((name) => generateListItemHtml(name.toLowerCase()))
+    .join("\n");
+}
+
+
