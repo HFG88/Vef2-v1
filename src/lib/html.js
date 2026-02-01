@@ -32,12 +32,12 @@ export function generateQuestionHtml(q) {
           <div class="arrow-buttons" role="button" aria-label="Sýna/fela svar">
             <img
               class="up-arrow hidden"
-              src="./svg/up-arrow.svg"
+              src="./up-arrow.svg"
               alt="Fela svar"
             />
             <img
               class="down-arrow"
-              src="./svg/down-arrow.svg"
+              src="./down-arrow.svg"
               alt="Sýna svar"
             />
           </div>
